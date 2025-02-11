@@ -17,7 +17,10 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import path
+
+from accounts.views import CustomLoginView, CustomPasswordChangeView, SignUpView
 from myapp.views import home, about, contact, chart, new_music, news, album_details, UserMessageCreateView
 
 urlpatterns = [
@@ -29,7 +32,11 @@ urlpatterns = [
     path('new-music/', new_music, name="new-music"),
     path('news/', news, name='news'),
     path('album/<album_id>', album_details, name='album'),
-    path('usermessage/', UserMessageCreateView.as_view(), name='user-message')
+    path('usermessage/', UserMessageCreateView.as_view(), name='user-message'),
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('change-password', CustomPasswordChangeView.as_view(), name='change-password'),
+    path('signup/', SignUpView.as_view(), name='signup'),
 
 ]
 
