@@ -4,4 +4,13 @@
 {% block content %}
 <h1>Welcome.</h1>
 <p>Here is my Music</p>
+<ul>
+    {% for album in albums %}
+    <li>
+        {{ album.album_name }}
+    </li>
+    {% endfor %}
+
+
+</ul>
 {% endblock %}

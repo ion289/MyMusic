@@ -4,4 +4,15 @@
 {% block content %}
 <h1>New Music</h1>
 <p>Latest aired</p>
+
+<ul>
+    {% for album in albums %}
+    <li>
+        {{ album.album_name }}
+    </li>
+    {% endfor %}
+
+
+</ul>
+
 {% endblock %}

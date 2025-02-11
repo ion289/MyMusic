@@ -18,7 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from myapp.views import home, about, contact, chart, new_music, news
+from myapp.views import home, about, contact, chart, new_music, news, album_details, UserMessageCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +27,9 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
     path('chart/', chart, name='chart'),
     path('new-music/', new_music, name="new-music"),
-    path('news/', news, name='news')
+    path('news/', news, name='news'),
+    path('album/<album_id>', album_details, name='album'),
+    path('usermessage/', UserMessageCreateView.as_view(), name='user-message')
 
 ]
 

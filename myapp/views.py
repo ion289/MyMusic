@@ -3,6 +3,10 @@ from django.shortcuts import render
 # Create your views here.
 from django.contrib.sites import requests
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+
+from .forms import UserMessageForm
 from .models import Album, News, UserMessage, Review
 from django.db.models import Exists, OuterRef, Subquery
 
@@ -73,3 +77,16 @@ def news(request):
         'news': news
     }
     return render(request, 'news.html', context)
+
+def album_details(request, album_id):
+    album = Album.objects.get(pk=album_id)
+    context = {
+        'album': album
+    }
+    return render(request, 'album_details.html', context)
+
+class UserMessageCreateView(CreateView):
+    template_name = 'usermessage.html'
+    model = UserMessage
+    form_class = UserMessageForm
+    success_url = reverse_lazy('home')
