@@ -8,7 +8,10 @@
 <ul>
     {% for album in albums %}
     <li>
-        {{ album.album_name }}
+        <a href = "{% url 'album-detail' album.pk %}">
+            {{ album.album_name }}
+        </a>
+
     </li>
     {% endfor %}
 

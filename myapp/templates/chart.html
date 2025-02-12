@@ -3,11 +3,12 @@
 
 {% block content %}
 <h1>Chart</h1>
-<p>about chart bla bla</p>
+<p>Ordered by rating </p>
 <ul>
     {% for album in albums %}
     <li>
-        {{ album.album_name }}
+        <a href = "{% url 'album-detail' album.pk %}"> {{ album.album_name }}
+        </a>
     </li>
     {% endfor %}
 
