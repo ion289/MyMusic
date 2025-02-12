@@ -1,12 +1,15 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.contrib.sites import requests
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 
-from .forms import UserMessageForm
+from .forms import UserMessageForm, ReviewForm
+from .mixins import UserIsReviewOwnerMixin
 from .models import Album, News, UserMessage, Review
 from django.db.models import Exists, OuterRef, Subquery
 
@@ -78,15 +81,77 @@ def news(request):
     }
     return render(request, 'news.html', context)
 
-def album_details(request, album_id):
+# class PostDetails(DetailView):
+#     model = Post
+#     template_name = 'posts_detail.html'
+
+def album_detail(request, album_id):
     album = Album.objects.get(pk=album_id)
-    context = {
-        'album': album
-    }
-    return render(request, 'album_details.html', context)
+    reviews = Review.objects.filter(album=album).order_by('-pk')[:3]
+
+    # Variabila care tine cont daca un user a postat deja un review
+    # la aceasta postare
+    user_already_reviewed = False
+
+    for review in reviews:
+        if review.user == request.user:
+            user_already_reviewed = True
+
+    return render(
+        request,
+        'album_detail.html',
+        context={
+            'object': album,
+            'reviews': reviews,
+            'user_already_reviewed': user_already_reviewed
+        }
+    )
 
 class UserMessageCreateView(CreateView):
     template_name = 'usermessage.html'
     model = UserMessage
     form_class = UserMessageForm
     success_url = reverse_lazy('home')
+
+@login_required()
+def add_review_view(request, album_id):
+        if request.method == 'POST':
+            rating = request.POST['rating']
+            review = request.POST['review']
+            album = Album.objects.get(pk=album_id)
+
+            Review.objects.create(
+                rating=rating,
+                review=review,
+                album=album,
+                user=request.user
+            )
+
+            return redirect('album-detail', album_id=album_id)
+        else:
+            return redirect('home')
+
+
+class ReviewUpdateView(LoginRequiredMixin, UserIsReviewOwnerMixin, UpdateView):
+        template_name = 'review_update.html'
+        form_class = ReviewForm
+        model = Review
+        success_url = reverse_lazy('home')
+
+class ReviewDeleteView(LoginRequiredMixin, UserIsReviewOwnerMixin, DeleteView):
+        template_name = 'review_confirm_delete.html'
+        model = Review
+        success_url = reverse_lazy('home')
+
+def see_all_reviews_view(request, post_id):
+        album = Album.objects.get(pk=post_id)
+        reviews = Review.objects.filter(album=album).order_by('-pk')
+
+        return render(
+            request,
+            'all_review.html',
+            context={
+                'album': album,
+                'reviews': reviews
+            }
+        )
