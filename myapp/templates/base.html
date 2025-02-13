@@ -70,7 +70,7 @@
                 {{ user.username }}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <form action="{% url 'logout' %}" method="post">
+                <form action="{% url 'logout' %}" method="post" id="logout-form">
                 {% csrf_token %}
                 <button type="submit">Logout</button>
                 </form>

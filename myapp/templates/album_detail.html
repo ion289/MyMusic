@@ -8,6 +8,10 @@
 <p>
    {{ object.average_rating }}
 </p>
+<a
+    href="{{ object.links}}" target="_blank">
+    Listen it here
+    </a>
 
 <!-- Buton vizibil doar pentru utilizatorii logati -->
 {% if user.is_authenticated %}
