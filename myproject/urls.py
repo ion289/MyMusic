@@ -22,7 +22,7 @@ from django.urls import path
 
 from accounts.views import CustomLoginView, CustomPasswordChangeView, SignUpView
 from myapp.views import home, about, contact, chart, new_music, news, album_detail, UserMessageCreateView, \
-    add_review_view, ReviewUpdateView, ReviewDeleteView, see_all_reviews_view
+    add_review_view, ReviewUpdateView, ReviewDeleteView, see_all_reviews_view, NewsDetails
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,9 +41,10 @@ urlpatterns = [
     path('add-review/<album_id>', add_review_view, name='add-review'),
     path('edit-review/<pk>', ReviewUpdateView.as_view(), name='edit-review'),
     path('delete-review/<pk>', ReviewDeleteView.as_view(), name='delete-review'),
-    path('reviews/<post_id>', see_all_reviews_view, name='reviews')
+    path('reviews/<post_id>', see_all_reviews_view, name='reviews'),
+    path('news-details/<pk>', NewsDetails.as_view(), name="news-details")
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,

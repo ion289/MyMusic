@@ -3,5 +3,18 @@
 
 {% block content %}
 <h1>News</h1>
-<p>News bla bla</p>
+<p>The latest News added to this site</p>
+
+<ul>
+    {% for n in news %}
+    <li>
+        <a href = "{% url 'news-details' n.pk %}">
+            {{ n.news_title }}
+        </a>
+
+    </li>
+    {% endfor %}
+
+
+</ul>
 {% endblock %}

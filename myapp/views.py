@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.sites import requests
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from .forms import UserMessageForm, ReviewForm
 from .mixins import UserIsReviewOwnerMixin
@@ -155,3 +155,6 @@ def see_all_reviews_view(request, post_id):
                 'reviews': reviews
             }
         )
+class NewsDetails(DetailView):
+       model = News
+       template_name = 'news_details.html'

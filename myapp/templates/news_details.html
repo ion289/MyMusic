@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>{{object.news_title}}</p>
+<p>{{object.news_writer}}</p>
+<p>{{object.published_date}}</p>
+<p>{{object.news_detail}}</p>
+
+<img src = "{{object.news.url}}"/>
+
+{% endblock %}

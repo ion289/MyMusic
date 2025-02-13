@@ -7,7 +7,11 @@
 <ul>
     {% for album in albums %}
     <li>
-        {{ album.album_name }}
+        <p>{{ album.album_name }}</p>
+        <p> The latest review is "{{album.latest_review}}" </p>
+        <p>  Reviewed by {{album.reviewer}} </p>
+        <p>  Review dated at {{album.review_published_date.date}} </p>
+
     </li>
     {% endfor %}
 
