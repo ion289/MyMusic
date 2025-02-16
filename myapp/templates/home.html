@@ -3,11 +3,11 @@
 
 {% block content %}
 <h1>Welcome.</h1>
-<p>Here is my Music</p>
+<p>Here are the latest reviews for MyMusic collection</p>
 <ul>
     {% for album in albums %}
     <li>
-        <p>{{ album.album_name }}</p>
+        <p> {{album.album_name }}</p>
         <p> The latest review is "{{album.latest_review}}" </p>
         <p>  Reviewed by {{album.reviewer}} </p>
         <p>  Review dated at {{album.review_published_date.date}} </p>
