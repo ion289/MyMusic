@@ -3,16 +3,46 @@
 
 {% block content %}
 <h1>Welcome.</h1>
-<p>Here are the latest reviews for MyMusic collection</p>
+<h3>Here are the latest reviews for MyMusic collection</h3>
 <ul>
     {% for album in albums %}
-    <li>
-        <p> {{album.album_name }}</p>
-        <p> The latest review is "{{album.latest_review}}" </p>
-        <p>  Reviewed by {{album.reviewer}} </p>
-        <p>  Review dated at {{album.review_published_date.date}} </p>
+<!--    <li>-->
+<!--        <p> {{album.album_name }}</p>-->
+<!--        <p> The latest review is "{{album.latest_review}}" </p>-->
+<!--        <p>  Reviewed by {{album.reviewer}} </p>-->
+<!--        <p>  Review dated at {{album.review_published_date.date}} </p>-->
 
-    </li>
+<!--    </li>-->
+
+    <style>
+  .album-name {
+    color: lightsalmon;
+    font-weight: bold;
+  }
+  .review {
+    color: lightsalmon;
+  }
+  .reviewer {
+    color: lightblue;
+  }
+  .review-date {
+    color: lightblue;
+  }
+</style>
+
+<li>
+    <p><span class="album-name">{{ album.album_name }}</span></p>
+    <p>The latest review is
+       <span class="review">"{{ album.latest_review }}"</span>
+    </p>
+    <p>Reviewed by
+       <span class="reviewer">{{ album.reviewer }}</span>
+    </p>
+    <p>Review dated at
+       <span class="review-date">{{ album.review_published_date.date }}</span>
+    </p>
+</li>
+
     {% endfor %}
 
 
